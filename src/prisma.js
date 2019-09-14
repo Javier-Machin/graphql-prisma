@@ -5,6 +5,12 @@ const prisma = new Prisma({
   endpoint: 'http://localhost:4466'
 });
 
-prisma.query.users(null, '{ id name email }').then(data => {
-  console.log(data);
+prisma.query.users(null, '{ id name email posts { id title } }').then(data => {
+  console.log('*** USERS ***');
+  console.log(JSON.stringify(data, undefined, 2));
+});
+
+prisma.query.comments(null, '{ id text author { id name } }').then(data => {
+  console.log('*** COMMENTS ***');
+  console.log(JSON.stringify(data, undefined, 2));
 });
