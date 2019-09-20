@@ -6,12 +6,14 @@ const Query = {
       email: 'javi@example.com'
     };
   },
-  users(parent, args, { db }, info) {
-    if (!args.query) return db.users;
+  users(parent, args, { prisma }, info) {
+    return prisma.query.users(null, info);
 
-    return db.users.filter(user => {
-      return user.name.toLowerCase().includes(args.query.toLowerCase());
-    });
+    // if (!args.query) return db.users;
+
+    // return db.users.filter(user => {
+    //   return user.name.toLowerCase().includes(args.query.toLowerCase());
+    // });
   },
   post() {
     return {
@@ -21,16 +23,17 @@ const Query = {
       published: true
     };
   },
-  posts(parent, args, { db }, info) {
-    const { query } = args;
-    if (!query) return db.posts;
+  posts(parent, args, { prisma }, info) {
+    return prisma.query.posts(null, info);
+    // const { query } = args;
+    // if (!query) return db.posts;
 
-    return db.posts.filter(post => {
-      return (
-        post.title.toLowerCase().includes(query.toLowerCase()) ||
-        post.body.toLowerCase().includes(query.toLowerCase())
-      );
-    });
+    // return db.posts.filter(post => {
+    //   return (
+    //     post.title.toLowerCase().includes(query.toLowerCase()) ||
+    //     post.body.toLowerCase().includes(query.toLowerCase())
+    //   );
+    // });
   },
   comments(parent, args, { db }, info) {
     return db.comments;
